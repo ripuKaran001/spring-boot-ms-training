@@ -1,20 +1,55 @@
-package com.ri.spring.mobile.apis.users.dto;
+/**
+ * 
+ */
+package com.ri.spring.mobile.app.users.apis.data;
 
 import java.io.Serializable;
 
-public class UserDto implements Serializable {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+/**
+ * @author ripum
+ *
+ */
+@Entity
+@Table(name = "table_users")
+public class UserEntity implements Serializable {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -2454976490258461837L;
+	private static final long serialVersionUID = 1905641592831883528L;
 
+	@Id
+	@GeneratedValue
+	private long id;
+
+	@Column(nullable = false, length = 30)
 	private String firstName;
+
+	@Column(nullable = false, length = 30)
 	private String lastName;
-	private String password;
+
+	@Column(nullable = false, length = 130, unique = true)
 	private String email;
+
+	@Column(nullable = false, unique = true)
 	private String userId;
+
+	@Column(nullable = false, unique = true)
 	private String encryptedPassword;
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
 
 	public String getFirstName() {
 		return firstName;
@@ -30,14 +65,6 @@ public class UserDto implements Serializable {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public String getEmail() {
@@ -63,5 +90,4 @@ public class UserDto implements Serializable {
 	public void setEncryptedPassword(String encryptedPassword) {
 		this.encryptedPassword = encryptedPassword;
 	}
-
 }
