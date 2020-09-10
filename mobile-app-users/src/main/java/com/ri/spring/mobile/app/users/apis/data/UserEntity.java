@@ -40,7 +40,7 @@ public class UserEntity implements Serializable {
 	@Column(nullable = false, unique = true)
 	private String userId;
 
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false)
 	private String encryptedPassword;
 
 	public long getId() {
