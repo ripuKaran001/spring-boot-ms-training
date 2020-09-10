@@ -1,4 +1,4 @@
-package com.ri.spring.mobile.ui.ws.mobileapp.users;
+package com.ri.spring.mobile.app.users;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
