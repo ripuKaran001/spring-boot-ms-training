@@ -21,9 +21,8 @@ import com.ri.spring.mobile.app.users.ui.model.Error;
 @ControllerAdvice
 public class UserControllerAdvice {
 
-	@ExceptionHandler(value = { UsersException.class })
-	public ResponseEntity<Error> usersExceptionHandler(UsersException exception, WebRequest request) {
-		
+	@ExceptionHandler(value = { UsersException.class, RuntimeException.class })
+	public ResponseEntity<Error> usersExceptionHandler(Exception exception, WebRequest request) {
 		return new ResponseEntity<>(new Error(HttpStatus.INTERNAL_SERVER_ERROR.value(), exception.getLocalizedMessage(),
 				LocalDateTime.now()), HttpStatus.INTERNAL_SERVER_ERROR);
 	}

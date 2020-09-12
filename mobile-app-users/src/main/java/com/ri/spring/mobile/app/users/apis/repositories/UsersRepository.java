@@ -4,7 +4,6 @@
 package com.ri.spring.mobile.app.users.apis.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 import com.ri.spring.mobile.app.users.apis.data.UserEntity;
 
@@ -14,7 +13,8 @@ import com.ri.spring.mobile.app.users.apis.data.UserEntity;
  */
 public interface UsersRepository extends JpaRepository<UserEntity, Long> {
 
-	@Query("Select ue from UserEntity ue where ue.userId= ?1")
-	public UserEntity getUserByUserId(String userId);
+	public UserEntity findByUserId(String userId);
+
+	public UserEntity findByEmail(String email);
 
 }

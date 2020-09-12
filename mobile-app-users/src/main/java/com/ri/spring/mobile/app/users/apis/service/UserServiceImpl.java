@@ -3,11 +3,15 @@
  */
 package com.ri.spring.mobile.app.users.apis.service;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 import org.apache.commons.lang.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.ri.spring.mobile.app.users.apis.data.UserEntity;
@@ -42,7 +46,7 @@ public class UserServiceImpl implements UsersService {
 	public UserDto getUser(String userId) throws UsersException {
 		UserDto result = null;
 		if (StringUtils.isNotBlank(userId)) {
-			UserEntity userEntity = usersRepository.getUserByUserId(userId);
+			UserEntity userEntity = usersRepository.findByUserId(userId);
 			if (userEntity != null) {
 				result = modelMapper.map(userEntity, UserDto.class);
 			} else {
@@ -52,6 +56,24 @@ public class UserServiceImpl implements UsersService {
 		} else {
 			throw new UsersException("Invalid User Id !! Please provide Valid UserID");
 		}
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		UserEntity userEntity = usersRepository.findByEmail(username);
+		if (userEntity == null)
+			throw new UsersException("User Name not found");
+		return new User(userEntity.getEmail(), userEntity.getEncryptedPassword(), true, true, true, true,
+				new ArrayList<>());
+	}
+
+	@Override
+	public UserDto getUserByEmail(String email) throws UsersException {
+		UserEntity userEntity = usersRepository.findByEmail(email);
+		if (userEntity == null)
+			throw new UsersException("User not found");
+		UserDto resultedUser = modelMapper.map(userEntity, UserDto.class);
+		return resultedUser;
 	}
 
 }

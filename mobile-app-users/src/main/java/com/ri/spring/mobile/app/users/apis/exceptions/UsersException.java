@@ -7,7 +7,7 @@ package com.ri.spring.mobile.app.users.apis.exceptions;
  * @author ripum
  *
  */
-public class UsersException extends Exception {
+public class UsersException extends RuntimeException {
 
 	/**
 	 * 
@@ -17,5 +17,5 @@ public class UsersException extends Exception {
 	public UsersException(String message) {
 		super(message);
 	}
-	
+
 }
