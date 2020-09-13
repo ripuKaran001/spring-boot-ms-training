@@ -16,8 +16,6 @@ public class UserDto implements Serializable {
 	private String userId;
 	private String encryptedPassword;
 
-	private Error errorMessage;
-
 	public String getFirstName() {
 		return firstName;
 	}
