@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.ri.spring.mobile.app.users.config;
+package com.ri.spring.mobile.app.users.apis.config;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,6 +20,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.core.userdetails.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ri.spring.mobile.app.users.apis.constant.UserServiceConstant;
 import com.ri.spring.mobile.app.users.apis.dto.UserDto;
 import com.ri.spring.mobile.app.users.apis.service.UsersService;
 import com.ri.spring.mobile.app.users.ui.model.LoginRequestModel;
@@ -63,10 +64,10 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 		String userName = ((User) authResult.getPrincipal()).getUsername();
 		UserDto userDto = usersService.getUserByEmail(userName);
 		String tokenString = Jwts.builder().setSubject(userDto.getUserId())
-				.setExpiration(
-						new Date(System.currentTimeMillis() + Long.valueOf(env.getProperty("token.expiration_time"))))
-				.signWith(SignatureAlgorithm.HS512, env.getProperty("token.serect")).compact();
-		response.addHeader("token", tokenString);
+				.setExpiration(new Date(System.currentTimeMillis()
+						+ Long.valueOf(env.getProperty(UserServiceConstant.TOKEN_EXPIRATION_TIME))))
+				.signWith(SignatureAlgorithm.HS512, env.getProperty(UserServiceConstant.TOKEN_SECRET)).compact();
+		response.addHeader(UserServiceConstant.TOKEN, tokenString);
 		response.addHeader("userId", userDto.getUserId());
 	}
 

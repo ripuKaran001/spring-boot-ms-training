@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.ri.spring.mobile.app.users.config;
+package com.ri.spring.mobile.app.users.apis.config;
 
 import java.time.LocalDateTime;
 

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.ri.spring.mobile.app.users.config;
+package com.ri.spring.mobile.app.users.apis.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -42,7 +42,7 @@ public class UsersWebSecurity extends WebSecurityConfigurerAdapter {
 	private AuthenticationFilter getAuthenticationFilter() throws Exception {
 		AuthenticationFilter authenticationFilter = new AuthenticationFilter(environment, userService,
 				authenticationManager());
-		authenticationFilter.setFilterProcessesUrl(environment.getProperty("login.url.path"));
+		authenticationFilter.setFilterProcessesUrl(environment.getProperty("user.login.url.path"));
 		return authenticationFilter;
 	}
 
