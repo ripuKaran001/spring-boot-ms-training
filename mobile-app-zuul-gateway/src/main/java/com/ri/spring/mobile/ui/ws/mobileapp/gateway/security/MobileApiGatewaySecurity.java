@@ -27,6 +27,8 @@ public class MobileApiGatewaySecurity extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 				.antMatchers(HttpMethod.POST, env.getProperty("api.registration.url.path")).permitAll()
 				.antMatchers(HttpMethod.POST, env.getProperty("api.login.url.path")).permitAll()
+				.antMatchers(env.getProperty("api.gateway.actuator.url.path")).permitAll()
+				.antMatchers(env.getProperty("api.users.actuator.url.path")).permitAll()
 				.anyRequest().authenticated()
 				.and()
 				.addFilter(new AuthorizationFilter(authenticationManager(), env));

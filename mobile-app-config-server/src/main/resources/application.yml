@@ -1,0 +1,23 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: bus-refresh
+server:
+  port: 8020
+spring:
+  application:
+    name: mobile_app_config_server
+  cloud:
+    config:
+      server:
+        git:
+          clone-on-start: true
+          password: 
+          uri: https://github.com/ripuKaran001/moble-app-config
+          username: 
+  rabbitmq:
+    host: localhost
+    password: 7upNimbooz
+    port: 5672
+    username: mobileApp
