@@ -4,20 +4,28 @@
 package com.ri.spring.mobile.app.users.apis.service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.apache.commons.lang.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.core.env.Environment;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.client.RestTemplate;
 
 import com.ri.spring.mobile.app.users.apis.data.UserEntity;
 import com.ri.spring.mobile.app.users.apis.dto.UserDto;
 import com.ri.spring.mobile.app.users.apis.exceptions.UsersException;
 import com.ri.spring.mobile.app.users.apis.repositories.UsersRepository;
+import com.ri.spring.mobile.app.users.ui.model.ProductResponseModel;
 
 /**
  * @author ripum
@@ -25,13 +33,22 @@ import com.ri.spring.mobile.app.users.apis.repositories.UsersRepository;
  */
 
 public class UserServiceImpl implements UsersService {
+	
+	@Autowired
+	private Environment env;
 
 	@Autowired
 	private UsersRepository usersRepository;
+
 	@Autowired
 	private ModelMapper modelMapper;
+
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+	@Autowired
+	@LoadBalanced
+	private RestTemplate restTemplate;
 
 	@Override
 	public UserDto createUser(UserDto userDetails) {
@@ -49,6 +66,10 @@ public class UserServiceImpl implements UsersService {
 			UserEntity userEntity = usersRepository.findByUserId(userId);
 			if (userEntity != null) {
 				result = modelMapper.map(userEntity, UserDto.class);
+				ResponseEntity<List<ProductResponseModel>> responseEntity = restTemplate.exchange(env.getProperty("products.service.url"), HttpMethod.GET,
+						null, new ParameterizedTypeReference<List<ProductResponseModel>>() {
+						});
+				result.setProducts(responseEntity.getBody());
 			} else {
 				throw new UsersException("Users Details not found for : " + userId);
 			}

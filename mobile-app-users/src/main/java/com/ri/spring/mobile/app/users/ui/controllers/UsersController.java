@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ri.spring.mobile.app.users.apis.dto.UserDto;
 import com.ri.spring.mobile.app.users.apis.exceptions.UsersException;
 import com.ri.spring.mobile.app.users.apis.service.UsersService;
-import com.ri.spring.mobile.app.users.ui.model.CreateUserRequestModel;
-import com.ri.spring.mobile.app.users.ui.model.CreateUserResponseModel;
+import com.ri.spring.mobile.app.users.ui.model.UserRequestModel;
+import com.ri.spring.mobile.app.users.ui.model.UserResponseModel;
 
 /**
  * @author ripum
@@ -49,21 +49,20 @@ public class UsersController {
 
 	@PostMapping(produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }, consumes = {
 			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-	public ResponseEntity<CreateUserResponseModel> createUser(@Valid @RequestBody CreateUserRequestModel userDetail) {
+	public ResponseEntity<UserResponseModel> createUser(@Valid @RequestBody UserRequestModel userDetail) {
 		UserDto userDto = modelMapper.map(userDetail, UserDto.class);
 		UserDto created = userService.createUser(userDto);
-		CreateUserResponseModel response = modelMapper.map(created, CreateUserResponseModel.class);
+		UserResponseModel response = modelMapper.map(created, UserResponseModel.class);
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 
 	@GetMapping(path = "/{userId}", produces = { MediaType.APPLICATION_JSON_VALUE,
 			MediaType.APPLICATION_XML_VALUE }, consumes = { MediaType.APPLICATION_JSON_VALUE,
 					MediaType.APPLICATION_XML_VALUE })
-
-	public ResponseEntity<CreateUserResponseModel> getUser(@PathVariable("userId") String userId)
+	public ResponseEntity<UserResponseModel> getUser(@PathVariable("userId") String userId)
 			throws UsersException {
 		UserDto userDto = userService.getUser(userId);
-		CreateUserResponseModel response = modelMapper.map(userDto, CreateUserResponseModel.class);
-		return new ResponseEntity<CreateUserResponseModel>(response, HttpStatus.OK);
+		UserResponseModel response = modelMapper.map(userDto, UserResponseModel.class);
+		return new ResponseEntity<UserResponseModel>(response, HttpStatus.OK);
 	}
 }
