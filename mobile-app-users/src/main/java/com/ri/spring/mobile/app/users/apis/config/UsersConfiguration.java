@@ -8,8 +8,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.client.RestTemplate;
 
+import com.ri.spring.mobile.app.users.apis.exceptions.FeignErrorDecoder;
 import com.ri.spring.mobile.app.users.apis.service.UserServiceImpl;
 import com.ri.spring.mobile.app.users.apis.service.UsersService;
+
+import feign.Logger;
 
 /**
  * 
@@ -35,13 +38,21 @@ public class UsersConfiguration {
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
+
 	@Bean
 	@LoadBalanced
 	public RestTemplate getRestTemplate() {
 		return new RestTemplate();
 	}
-	
-	
-	
+
+	@Bean
+	public Logger.Level getFeignLogger() {
+		return Logger.Level.FULL;
+	}
+
+	@Bean
+	public FeignErrorDecoder getErrorDecoder() {
+		return new FeignErrorDecoder();
+	}
+
 }
