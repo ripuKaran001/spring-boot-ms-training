@@ -11,9 +11,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableFeignClients
 @EnableCircuitBreaker
 public class MobileAppUsersApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(MobileAppUsersApplication.class, args);
 	}
-
 }

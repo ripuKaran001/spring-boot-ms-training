@@ -13,11 +13,14 @@ spring:
       server:
         git:
           clone-on-start: true
-          password: 7upNimbooz@123
-          uri: https://github.com/ripuKaran001/moble-app-config
-          username: ripuKaran001
+          password: ########
+          uri: https://github.com/########/moble-app-config
+          username: #########
   rabbitmq:
     host: localhost
     password: 7upNimbooz
     port: 5672
     username: mobileApp
+logging:
+   file:
+    name: E:/SpringAndMicroServiceTrainingUdemy/MobileAppLogs/mobile-app-config.log
