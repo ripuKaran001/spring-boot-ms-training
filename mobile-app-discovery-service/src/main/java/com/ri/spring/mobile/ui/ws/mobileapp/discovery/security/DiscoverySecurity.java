@@ -1,8 +1,10 @@
 package com.ri.spring.mobile.ui.ws.mobileapp.discovery.security;
 
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
+@EnableWebSecurity
 public class DiscoverySecurity extends WebSecurityConfigurerAdapter {
 
 	@Override

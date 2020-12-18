@@ -98,6 +98,7 @@ public class UserServiceImpl implements UsersService {
 				logger.info("Product Service Call --- > End");
 				result.setProducts(products);
 				
+				
 			} else {
 				throw new UsersException("Users Details not found for : " + userId);
 			}

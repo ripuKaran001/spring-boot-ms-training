@@ -13,9 +13,9 @@ spring:
       server:
         git:
           clone-on-start: true
-          password: ########
-          uri: https://github.com/########/moble-app-config
-          username: #########
+          password: #########
+          uri: https://github.com/ripuKaran001/moble-app-config
+          username: ripuKaran001
   rabbitmq:
     host: localhost
     password: 7upNimbooz
